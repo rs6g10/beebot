@@ -189,36 +189,56 @@ const WORLDS = [
         decorations: [{ x: 2, y: 2, emoji: '🐪' }, { x: 2, y: 3, emoji: '🏺' }]
       },
       {
+        // Redesigned: Crossroads! Mummy patrols across the top path, Bee comes from bottom left.
         gridSize: 5, beeStart: { x: 0, y: 4, dir: 0 }, goal: { x: 4, y: 0 },
         map: [
-          [0, 0, 1, 1, 1], [0, 0, 1, 0, 0], [0, 0, 1, 1, 0], [1, 1, 1, 0, 0], [1, 0, 0, 0, 0]
+          [0, 1, 1, 1, 1],
+          [0, 1, 0, 1, 0],
+          [0, 1, 1, 1, 0],
+          [1, 1, 0, 0, 0],
+          [1, 0, 0, 0, 0]
         ],
-        decorations: [{ x: 1, y: 1, emoji: '🏺' }],
-        enemies: [{ axis: 'x', y: 0, min: 2, max: 4 }]
+        decorations: [{ x: 4, y: 2, emoji: '🏺' }],
+        enemies: [{ axis: 'y', x: 3, min: 0, max: 2 }]
       },
       {
+        // Redesigned: Large 3x3 open room in the middle to easily dodge the mummy!
         gridSize: 5, beeStart: { x: 2, y: 4, dir: 0 }, goal: { x: 2, y: 0 },
         map: [
-          [0, 0, 1, 0, 0], [0, 1, 1, 1, 0], [0, 1, 0, 1, 0], [0, 1, 1, 1, 0], [0, 0, 1, 0, 0]
+          [0, 0, 1, 0, 0],
+          [0, 1, 1, 1, 0],
+          [0, 1, 1, 1, 0],
+          [0, 1, 1, 1, 0],
+          [0, 0, 1, 0, 0]
         ],
         decorations: [{ x: 0, y: 4, emoji: '🌴' }, { x: 4, y: 4, emoji: '🌴' }],
-        enemies: [{ axis: 'x', y: 1, min: 1, max: 3 }]
+        enemies: [{ axis: 'x', y: 2, min: 1, max: 3 }]
       },
       {
+        // Redesigned: Mummy patrols the top path, Bee can take a shortcut at y=3!
         gridSize: 5, beeStart: { x: 4, y: 4, dir: 270 }, goal: { x: 2, y: 2 },
         map: [
-          [1, 1, 1, 1, 1], [1, 0, 0, 0, 1], [1, 0, 1, 0, 1], [1, 0, 1, 1, 1], [0, 0, 0, 0, 1]
+          [1, 1, 1, 1, 1],
+          [1, 0, 0, 0, 1],
+          [1, 0, 1, 0, 1],
+          [1, 0, 1, 1, 1],
+          [1, 1, 1, 0, 1]
         ],
         decorations: [{ x: 2, y: 3, emoji: '🏺' }],
-        enemies: [{ axis: 'y', x: 4, min: 0, max: 4 }]
+        enemies: [{ axis: 'x', y: 0, min: 1, max: 3 }]
       },
       {
+        // Redesigned: Nice safe intersections
         gridSize: 5, beeStart: { x: 0, y: 4, dir: 0 }, goal: { x: 4, y: 2 },
         map: [
-          [1, 1, 1, 1, 0], [1, 0, 0, 1, 0], [1, 0, 1, 1, 1], [1, 0, 1, 0, 0], [1, 1, 1, 0, 0]
+          [1, 1, 1, 1, 0],
+          [1, 0, 1, 1, 0],
+          [1, 1, 1, 1, 1],
+          [1, 0, 1, 0, 0],
+          [1, 1, 1, 0, 0]
         ],
         decorations: [{ x: 4, y: 4, emoji: '🐪' }, { x: 1, y: 3, emoji: '🏺' }],
-        enemies: [{ axis: 'y', x: 0, min: 0, max: 4 }]
+        enemies: [{ axis: 'y', x: 2, min: 0, max: 2 }]
       }
     ]
   },
@@ -245,28 +265,42 @@ const WORLDS = [
         decorations: [{ x: 1, y: 2, emoji: '🕸️' }, { x: 3, y: 1, emoji: '🦇' }, { x: 0, y: 0, emoji: '🎃' }]
       },
       {
+        // Redesigned: Ghost crosses the middle horizontally, Bee has left and right path options
         gridSize: 5, beeStart: { x: 4, y: 4, dir: 270 }, goal: { x: 0, y: 0 },
         map: [
-          [1, 1, 1, 0, 0], [1, 0, 1, 0, 0], [1, 0, 1, 1, 1], [0, 0, 0, 0, 1], [0, 0, 0, 0, 1]
+          [1, 1, 1, 0, 0],
+          [1, 0, 1, 0, 0],
+          [1, 0, 1, 1, 1],
+          [1, 0, 0, 0, 1],
+          [1, 1, 1, 1, 1]
         ],
         decorations: [{ x: 2, y: 3, emoji: '🦇' }, { x: 0, y: 4, emoji: '🎃' }],
-        enemies: [{ axis: 'y', x: 0, min: 0, max: 2 }]
+        enemies: [{ axis: 'x', y: 4, min: 0, max: 2 }]
       },
       {
         gridSize: 5, beeStart: { x: 0, y: 2, dir: 90 }, goal: { x: 4, y: 2 },
         map: [
-          [0, 1, 1, 1, 0], [0, 1, 0, 1, 0], [1, 1, 0, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]
+          [0, 1, 1, 1, 0],
+          [0, 1, 0, 1, 0],
+          [1, 1, 0, 1, 1],
+          [0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0]
         ],
         decorations: [{ x: 2, y: 4, emoji: '🎃' }],
-        enemies: [{ axis: 'x', y: 0, min: 1, max: 3 }]
+        enemies: [{ axis: 'x', y: 0, min: 1, max: 2 }]
       },
       {
+        // Redesigned: Open room allowing you to easily dodge the two ghosts
         gridSize: 5, beeStart: { x: 0, y: 4, dir: 0 }, goal: { x: 4, y: 0 },
         map: [
-          [0, 0, 0, 0, 1], [0, 1, 1, 1, 1], [0, 1, 0, 0, 0], [0, 1, 1, 1, 0], [1, 1, 0, 1, 0]
+          [0, 0, 1, 1, 1],
+          [0, 0, 1, 1, 1],
+          [0, 0, 1, 1, 1],
+          [1, 1, 1, 1, 1],
+          [1, 0, 0, 0, 0]
         ],
         decorations: [{ x: 0, y: 0, emoji: '🕸️' }, { x: 4, y: 4, emoji: '🦇' }],
-        enemies: [{ axis: 'x', y: 1, min: 1, max: 4 }, { axis: 'x', y: 3, min: 1, max: 3 }]
+        enemies: [{ axis: 'x', y: 2, min: 2, max: 4 }, { axis: 'y', x: 2, min: 0, max: 2 }]
       },
       {
         gridSize: 5, beeStart: { x: 2, y: 4, dir: 0 }, goal: { x: 2, y: 0 },
@@ -274,7 +308,7 @@ const WORLDS = [
           [0, 1, 1, 1, 0], [0, 1, 0, 1, 0], [0, 1, 1, 1, 0], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0]
         ],
         decorations: [{ x: 0, y: 4, emoji: '🎃' }, { x: 4, y: 4, emoji: '🎃' }],
-        enemies: [{ axis: 'x', y: 2, min: 1, max: 3 }]
+        enemies: [{ axis: 'x', y: 2, min: 1, max: 2 }]
       },
       {
         gridSize: 5, beeStart: { x: 0, y: 4, dir: 0 }, goal: { x: 4, y: 0 },
@@ -282,7 +316,7 @@ const WORLDS = [
           [1, 1, 1, 1, 1], [1, 0, 0, 0, 1], [1, 0, 1, 0, 1], [1, 0, 1, 0, 1], [1, 1, 1, 0, 1]
         ],
         decorations: [{ x: 2, y: 1, emoji: '🕸️' }, { x: 4, y: 2, emoji: '🦇' }],
-        enemies: [{ axis: 'x', y: 0, min: 0, max: 4 }, { axis: 'x', y: 4, min: 0, max: 2 }]
+        enemies: [{ axis: 'x', y: 0, min: 1, max: 3 }]
       }
     ]
   },
@@ -314,7 +348,7 @@ const WORLDS = [
           [0, 0, 1, 1, 1], [0, 0, 1, 0, 1], [1, 1, 1, 0, 1], [1, 0, 0, 0, 1], [1, 1, 1, 1, 1]
         ],
         decorations: [{ x: 1, y: 1, emoji: '📡' }, { x: 2, y: 3, emoji: '💻' }],
-        enemies: [{ axis: 'y', x: 2, min: 0, max: 2 }]
+        enemies: [{ axis: 'y', x: 2, min: 0, max: 1 }]
       },
       {
         gridSize: 5, beeStart: { x: 2, y: 4, dir: 0 }, goal: { x: 2, y: 0 },
@@ -322,15 +356,20 @@ const WORLDS = [
           [0, 1, 1, 1, 0], [0, 1, 0, 1, 0], [0, 1, 1, 1, 0], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0]
         ],
         decorations: [{ x: 0, y: 4, emoji: '⚙️' }, { x: 4, y: 4, emoji: '⚙️' }],
-        enemies: [{ axis: 'x', y: 2, min: 1, max: 3 }]
+        enemies: [{ axis: 'x', y: 2, min: 1, max: 2 }]
       },
       {
+        // Redesigned: Large 2x2 platforms so you can easily pull over and let the robot pass
         gridSize: 5, beeStart: { x: 0, y: 0, dir: 180 }, goal: { x: 4, y: 4 },
         map: [
-          [1, 1, 0, 0, 0], [0, 1, 1, 0, 0], [0, 0, 1, 1, 0], [0, 0, 0, 1, 1], [0, 0, 0, 0, 1]
+          [1, 1, 1, 0, 0],
+          [1, 1, 1, 0, 0],
+          [0, 0, 1, 1, 1],
+          [0, 0, 1, 1, 1],
+          [0, 0, 0, 0, 1]
         ],
         decorations: [{ x: 0, y: 4, emoji: '💻' }, { x: 4, y: 0, emoji: '📡' }],
-        enemies: [{ axis: 'y', x: 2, min: 2, max: 4 }]
+        enemies: [{ axis: 'x', y: 1, min: 0, max: 2 }, { axis: 'x', y: 3, min: 2, max: 4 }]
       },
       {
         gridSize: 5, beeStart: { x: 0, y: 4, dir: 0 }, goal: { x: 4, y: 0 },
@@ -338,7 +377,7 @@ const WORLDS = [
           [1, 1, 1, 1, 1], [1, 0, 0, 0, 1], [1, 1, 1, 1, 1], [1, 0, 0, 0, 1], [1, 1, 1, 1, 1]
         ],
         decorations: [{ x: 2, y: 1, emoji: '⚙️' }, { x: 2, y: 3, emoji: '⚙️' }],
-        enemies: [{ axis: 'x', y: 0, min: 0, max: 4 }, { axis: 'x', y: 4, min: 0, max: 4 }]
+        enemies: [{ axis: 'x', y: 0, min: 1, max: 2 }, { axis: 'x', y: 4, min: 2, max: 3 }]
       },
       {
         gridSize: 5, beeStart: { x: 2, y: 4, dir: 0 }, goal: { x: 2, y: 0 },
@@ -346,7 +385,7 @@ const WORLDS = [
           [1, 1, 1, 1, 1], [1, 0, 1, 0, 1], [1, 1, 1, 1, 1], [1, 0, 1, 0, 1], [1, 1, 1, 1, 1]
         ],
         decorations: [{ x: 0, y: 0, emoji: '💻' }, { x: 4, y: 4, emoji: '📡' }],
-        enemies: [{ axis: 'x', y: 2, min: 0, max: 4 }, { axis: 'y', x: 1, min: 0, max: 2 }]
+        enemies: [{ axis: 'x', y: 2, min: 2, max: 4 }, { axis: 'y', x: 2, min: 0, max: 1 }]
       }
     ]
   }
@@ -391,7 +430,7 @@ export default function App() {
     const hitEnemy = currentLevel.enemies?.some(e => {
       const L = e.max - e.min;
       if (L === 0) return false;
-      const cycle = L * 2;
+      const cycle = L > 0 ? L * 2 : 1;
       const pos = tick % cycle;
       const offset = pos > L ? cycle - pos : pos;
       const ex = e.axis === 'x' ? e.min + offset : e.x || 0;
