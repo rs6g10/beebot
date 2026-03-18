@@ -54,6 +54,25 @@ const DiamondSVG = () => (
   </svg>
 );
 
+const PotionSVG = () => (
+  <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-lg">
+    <path d="M40,15 L60,15 L60,35 L85,75 A20,20 0 0,1 15,75 L40,35 Z" fill="#9B59B6" stroke="#8E44AD" strokeWidth="4" strokeLinejoin="round" />
+    <rect x="42" y="5" width="16" height="10" fill="#E67E22" stroke="#D35400" strokeWidth="3" rx="2" />
+    <circle cx="50" cy="55" r="6" fill="#E8DAEF" opacity="0.9" />
+    <circle cx="65" cy="70" r="9" fill="#E8DAEF" opacity="0.9" />
+    <circle cx="35" cy="75" r="5" fill="#E8DAEF" opacity="0.9" />
+    <path d="M40,35 L60,35" stroke="#8E44AD" strokeWidth="4" />
+  </svg>
+);
+
+const BatterySVG = () => (
+  <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-[0_0_15px_rgba(46,204,113,0.5)]">
+    <rect x="25" y="20" width="50" height="70" rx="6" fill="#2ECC71" stroke="#27AE60" strokeWidth="4" />
+    <rect x="40" y="8" width="20" height="12" rx="3" fill="#BDC3C7" stroke="#95A5A6" strokeWidth="4" />
+    <polygon points="55,35 35,60 50,60 45,85 70,50 50,50" fill="#F1C40F" />
+  </svg>
+);
+
 // Curved arrow SVGs specifically for the orange buttons
 const CurvedArrowLeft = ({ width = 36, height = 36, strokeWidth = 4 }) => (
   <svg viewBox="0 0 24 24" width={width} height={height} stroke="white" strokeWidth={strokeWidth} fill="none" strokeLinecap="round" strokeLinejoin="round">
@@ -84,224 +103,250 @@ const WORLDS = [
   {
     id: 'garden',
     title: 'Bee-Bot in the Garden!',
-    subtitle: 'Can you help Bee-Bot on his mission to pollinate the flowers in the garden?',
+    subtitle: 'Can you help Bee-Bot on his mission to pollinate the flowers?',
+    enemyName: null,
+    enemyEmoji: null,
     colors: {
-      bg: 'bg-[#6BB936]',
-      header: 'bg-[#48872F]',
-      cardBorder: 'border-[#A5D289]',
-      cardText: 'text-[#4B5E9F]',
-      cardSub: 'text-[#E08A27]',
-      boardOuter: 'border-[#A2703D]',
-      boardInner: 'bg-[#7B5836]',
-      boardOuterDark: 'border-[#8A5A2B]',
-      path: 'bg-[#E6E6E6]',
-      wall: 'bg-[#7B5836]',
-      winBg: 'bg-[#539A3A]',
-      winHeader: 'bg-[#71BA49]',
-      winBorder: 'border-[#3F7C28]'
+      bg: 'bg-[#6BB936]', header: 'bg-[#48872F]',
+      cardBorder: 'border-[#A5D289]', cardText: 'text-[#4B5E9F]', cardSub: 'text-[#E08A27]',
+      boardOuter: 'border-[#A2703D]', boardInner: 'bg-[#7B5836]', boardOuterDark: 'border-[#8A5A2B]',
+      path: 'bg-[#E6E6E6]', wall: 'bg-[#7B5836]',
+      winBg: 'bg-[#539A3A]', winHeader: 'bg-[#71BA49]', winBorder: 'border-[#3F7C28]'
     },
     GoalSvg: FlowerSVG,
     levels: [
       {
-        gridSize: 5,
-        beeStart: { x: 2, y: 4, dir: 0 },
-        goal: { x: 2, y: 0 },
+        gridSize: 5, beeStart: { x: 2, y: 4, dir: 0 }, goal: { x: 2, y: 0 },
         map: [
-          [0, 0, 1, 0, 0],
-          [0, 0, 1, 0, 0],
-          [0, 0, 1, 0, 0],
-          [0, 0, 1, 0, 0],
-          [0, 0, 1, 0, 0]
+          [0, 0, 1, 0, 0], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0]
         ],
-        decorations: [
-          { x: 1, y: 2, emoji: '🥬' }, { x: 3, y: 3, emoji: '🥬' },
-          { x: 4, y: 1, emoji: '🌿' }, { x: 0, y: 0, emoji: '🌿' }
-        ]
+        decorations: [{ x: 1, y: 2, emoji: '🥬' }, { x: 3, y: 3, emoji: '🥬' }, { x: 4, y: 1, emoji: '🌿' }, { x: 0, y: 0, emoji: '🌿' }]
       },
       {
-        gridSize: 5,
-        beeStart: { x: 1, y: 4, dir: 0 },
-        goal: { x: 3, y: 2 },
+        gridSize: 5, beeStart: { x: 1, y: 4, dir: 0 }, goal: { x: 3, y: 2 },
         map: [
-          [0, 0, 0, 0, 0],
-          [0, 0, 0, 0, 0],
-          [0, 0, 0, 1, 0],
-          [0, 1, 1, 1, 0],
-          [0, 1, 0, 0, 0]
+          [0, 0, 0, 0, 0], [0, 0, 0, 0, 0], [0, 0, 0, 1, 0], [0, 1, 1, 1, 0], [0, 1, 0, 0, 0]
         ],
-        decorations: [
-          { x: 2, y: 2, emoji: '🥬' },
-          { x: 4, y: 4, emoji: '🌿' }, { x: 0, y: 1, emoji: '🌿' }
-        ]
+        decorations: [{ x: 2, y: 2, emoji: '🥬' }, { x: 4, y: 4, emoji: '🌿' }, { x: 0, y: 1, emoji: '🌿' }]
       },
       {
-        gridSize: 5,
-        beeStart: { x: 1, y: 4, dir: 0 },
-        goal: { x: 3, y: 1 },
+        gridSize: 5, beeStart: { x: 1, y: 4, dir: 0 }, goal: { x: 3, y: 1 },
         map: [
-          [0, 0, 0, 0, 0],
-          [0, 0, 0, 1, 0],
-          [0, 1, 1, 1, 0],
-          [0, 1, 0, 0, 0],
-          [0, 1, 0, 0, 0]
+          [0, 0, 0, 0, 0], [0, 0, 0, 1, 0], [0, 1, 1, 1, 0], [0, 1, 0, 0, 0], [0, 1, 0, 0, 0]
         ],
-        decorations: [
-          { x: 2, y: 4, emoji: '🥬' }, { x: 2, y: 1, emoji: '🥬' },
-          { x: 0, y: 2, emoji: '🌿' }, { x: 4, y: 1, emoji: '🌿' }
-        ]
+        decorations: [{ x: 2, y: 4, emoji: '🥬' }, { x: 2, y: 1, emoji: '🥬' }, { x: 0, y: 2, emoji: '🌿' }, { x: 4, y: 1, emoji: '🌿' }]
       },
       {
-        gridSize: 5,
-        beeStart: { x: 3, y: 4, dir: 0 },
-        goal: { x: 1, y: 4 },
+        gridSize: 5, beeStart: { x: 3, y: 4, dir: 0 }, goal: { x: 1, y: 4 },
         map: [
-          [0, 0, 0, 0, 0],
-          [0, 1, 1, 1, 0],
-          [0, 1, 0, 1, 0],
-          [0, 1, 0, 1, 0],
-          [0, 1, 0, 1, 0]
+          [0, 0, 0, 0, 0], [0, 1, 1, 1, 0], [0, 1, 0, 1, 0], [0, 1, 0, 1, 0], [0, 1, 0, 1, 0]
         ],
-        decorations: [
-          { x: 2, y: 3, emoji: '🥬' }, { x: 2, y: 2, emoji: '🥬' },
-          { x: 0, y: 0, emoji: '🌿' }, { x: 4, y: 4, emoji: '🌿' }
-        ]
+        decorations: [{ x: 2, y: 3, emoji: '🥬' }, { x: 2, y: 2, emoji: '🥬' }, { x: 0, y: 0, emoji: '🌿' }, { x: 4, y: 4, emoji: '🌿' }]
       },
       {
-        gridSize: 5,
-        beeStart: { x: 0, y: 4, dir: 0 },
-        goal: { x: 2, y: 2 },
+        gridSize: 5, beeStart: { x: 0, y: 4, dir: 0 }, goal: { x: 2, y: 2 },
         map: [
-          [1, 1, 1, 1, 1],
-          [1, 0, 0, 0, 1],
-          [1, 0, 1, 0, 1],
-          [1, 0, 1, 1, 1],
-          [1, 0, 0, 0, 0]
+          [1, 1, 1, 1, 1], [1, 0, 0, 0, 1], [1, 0, 1, 0, 1], [1, 0, 1, 1, 1], [1, 0, 0, 0, 0]
         ],
-        decorations: [
-          { x: 1, y: 2, emoji: '🥬' }, { x: 3, y: 2, emoji: '🥬' },
-          { x: 1, y: 4, emoji: '🌿' }, { x: 2, y: 1, emoji: '🌿' }
-        ]
+        decorations: [{ x: 1, y: 2, emoji: '🥬' }, { x: 3, y: 2, emoji: '🥬' }, { x: 1, y: 4, emoji: '🌿' }, { x: 2, y: 1, emoji: '🌿' }]
       },
       {
-        gridSize: 5,
-        beeStart: { x: 4, y: 3, dir: 0 },
-        goal: { x: 1, y: 3 },
+        gridSize: 5, beeStart: { x: 4, y: 3, dir: 0 }, goal: { x: 1, y: 3 },
         map: [
-          [0, 0, 0, 0, 0],
-          [0, 1, 1, 1, 1],
-          [0, 1, 0, 0, 1],
-          [0, 1, 0, 0, 1],
-          [0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0], [0, 1, 1, 1, 1], [0, 1, 0, 0, 1], [0, 1, 0, 0, 1], [0, 0, 0, 0, 0],
         ],
-        decorations: [
-          { x: 2, y: 2, emoji: '🥬' }, { x: 3, y: 2, emoji: '🥬' }, { x: 2, y: 3, emoji: '🥬' },
-          { x: 0, y: 4, emoji: '🌿' }
-        ]
+        decorations: [{ x: 2, y: 2, emoji: '🥬' }, { x: 3, y: 2, emoji: '🥬' }, { x: 2, y: 3, emoji: '🥬' }, { x: 0, y: 4, emoji: '🌿' }]
       }
     ]
   },
   {
     id: 'egypt',
     title: 'Ancient Egypt Adventure!',
-    subtitle: 'Navigate the pyramid maze, avoid the mummies, and find the hidden gems!',
+    subtitle: 'Navigate the pyramid maze, avoid mummies, and find the gems!',
+    enemyName: 'Mummy',
+    enemyEmoji: '🧟‍♂️',
     colors: {
-      bg: 'bg-[#ECA754]',
-      header: 'bg-[#C7822B]',
-      cardBorder: 'border-[#FAD7A1]',
-      cardText: 'text-[#5C3A21]',
-      cardSub: 'text-[#9C5311]',
-      boardOuter: 'border-[#D4AC0D]',
-      boardInner: 'bg-[#B9770E]',
-      boardOuterDark: 'border-[#9A6006]',
-      path: 'bg-[#FDEBD0]',
-      wall: 'bg-[#B9770E]',
-      winBg: 'bg-[#ECA754]',
-      winHeader: 'bg-[#D4AC0D]',
-      winBorder: 'border-[#B9770E]'
+      bg: 'bg-[#ECA754]', header: 'bg-[#C7822B]',
+      cardBorder: 'border-[#FAD7A1]', cardText: 'text-[#5C3A21]', cardSub: 'text-[#9C5311]',
+      boardOuter: 'border-[#D4AC0D]', boardInner: 'bg-[#B9770E]', boardOuterDark: 'border-[#9A6006]',
+      path: 'bg-[#FDEBD0]', wall: 'bg-[#B9770E]',
+      winBg: 'bg-[#ECA754]', winHeader: 'bg-[#D4AC0D]', winBorder: 'border-[#B9770E]'
     },
     GoalSvg: DiamondSVG,
     levels: [
       {
-        gridSize: 5,
-        beeStart: { x: 2, y: 4, dir: 0 },
-        goal: { x: 2, y: 0 },
+        gridSize: 5, beeStart: { x: 2, y: 4, dir: 0 }, goal: { x: 2, y: 0 },
         map: [
-          [0, 0, 1, 0, 0],
-          [0, 0, 1, 0, 0],
-          [0, 0, 1, 0, 0],
-          [0, 0, 1, 0, 0],
-          [0, 0, 1, 0, 0]
+          [0, 0, 1, 0, 0], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0]
         ],
         decorations: [{ x: 1, y: 2, emoji: '🏺' }, { x: 3, y: 2, emoji: '🏺' }, { x: 0, y: 0, emoji: '🌴' }]
       },
       {
-        gridSize: 5,
-        beeStart: { x: 0, y: 4, dir: 90 },
-        goal: { x: 4, y: 0 },
+        gridSize: 5, beeStart: { x: 0, y: 4, dir: 90 }, goal: { x: 4, y: 0 },
         map: [
-          [0, 0, 0, 0, 1],
-          [0, 0, 0, 0, 1],
-          [0, 0, 0, 0, 1],
-          [0, 0, 0, 0, 1],
-          [1, 1, 1, 1, 1]
+          [0, 0, 0, 0, 1], [0, 0, 0, 0, 1], [0, 0, 0, 0, 1], [0, 0, 0, 0, 1], [1, 1, 1, 1, 1]
         ],
         decorations: [{ x: 2, y: 2, emoji: '🐪' }, { x: 2, y: 3, emoji: '🏺' }]
       },
       {
-        gridSize: 5,
-        beeStart: { x: 0, y: 4, dir: 0 },
-        goal: { x: 4, y: 0 },
+        gridSize: 5, beeStart: { x: 0, y: 4, dir: 0 }, goal: { x: 4, y: 0 },
         map: [
-          [0, 0, 1, 1, 1],
-          [0, 0, 1, 0, 0],
-          [0, 0, 1, 1, 0],
-          [1, 1, 1, 0, 0],
-          [1, 0, 0, 0, 0]
+          [0, 0, 1, 1, 1], [0, 0, 1, 0, 0], [0, 0, 1, 1, 0], [1, 1, 1, 0, 0], [1, 0, 0, 0, 0]
         ],
         decorations: [{ x: 1, y: 1, emoji: '🏺' }],
-        mummies: [{ axis: 'x', y: 0, min: 2, max: 4 }]
+        enemies: [{ axis: 'x', y: 0, min: 2, max: 4 }]
       },
       {
-        gridSize: 5,
-        beeStart: { x: 2, y: 4, dir: 0 },
-        goal: { x: 2, y: 0 },
+        gridSize: 5, beeStart: { x: 2, y: 4, dir: 0 }, goal: { x: 2, y: 0 },
         map: [
-          [0, 0, 1, 0, 0],
-          [0, 1, 1, 1, 0],
-          [0, 1, 0, 1, 0],
-          [0, 1, 1, 1, 0],
-          [0, 0, 1, 0, 0]
+          [0, 0, 1, 0, 0], [0, 1, 1, 1, 0], [0, 1, 0, 1, 0], [0, 1, 1, 1, 0], [0, 0, 1, 0, 0]
         ],
         decorations: [{ x: 0, y: 4, emoji: '🌴' }, { x: 4, y: 4, emoji: '🌴' }],
-        mummies: [{ axis: 'x', y: 1, min: 1, max: 3 }]
+        enemies: [{ axis: 'x', y: 1, min: 1, max: 3 }]
       },
       {
-        gridSize: 5,
-        beeStart: { x: 4, y: 4, dir: 270 },
-        goal: { x: 2, y: 2 },
+        gridSize: 5, beeStart: { x: 4, y: 4, dir: 270 }, goal: { x: 2, y: 2 },
         map: [
-          [1, 1, 1, 1, 1],
-          [1, 0, 0, 0, 1],
-          [1, 0, 1, 0, 1],
-          [1, 0, 1, 1, 1],
-          [0, 0, 0, 0, 1]
+          [1, 1, 1, 1, 1], [1, 0, 0, 0, 1], [1, 0, 1, 0, 1], [1, 0, 1, 1, 1], [0, 0, 0, 0, 1]
         ],
         decorations: [{ x: 2, y: 3, emoji: '🏺' }],
-        mummies: [{ axis: 'y', x: 4, min: 0, max: 4 }]
+        enemies: [{ axis: 'y', x: 4, min: 0, max: 4 }]
       },
       {
-        gridSize: 5,
-        beeStart: { x: 0, y: 4, dir: 0 },
-        goal: { x: 4, y: 2 },
+        gridSize: 5, beeStart: { x: 0, y: 4, dir: 0 }, goal: { x: 4, y: 2 },
         map: [
-          [1, 1, 1, 1, 0],
-          [1, 0, 0, 1, 0],
-          [1, 0, 1, 1, 1],
-          [1, 0, 1, 0, 0],
-          [1, 1, 1, 0, 0]
+          [1, 1, 1, 1, 0], [1, 0, 0, 1, 0], [1, 0, 1, 1, 1], [1, 0, 1, 0, 0], [1, 1, 1, 0, 0]
         ],
         decorations: [{ x: 4, y: 4, emoji: '🐪' }, { x: 1, y: 3, emoji: '🏺' }],
-        mummies: [{ axis: 'y', x: 0, min: 0, max: 4 }]
+        enemies: [{ axis: 'y', x: 0, min: 0, max: 4 }]
+      }
+    ]
+  },
+  {
+    id: 'haunted',
+    title: 'Haunted Mansion!',
+    subtitle: 'Sneak past the ghosts and collect the magic potion!',
+    enemyName: 'Ghost',
+    enemyEmoji: '👻',
+    colors: {
+      bg: 'bg-[#2C3E50]', header: 'bg-[#1A252F]',
+      cardBorder: 'border-[#8E44AD]', cardText: 'text-[#8E44AD]', cardSub: 'text-[#9B59B6]',
+      boardOuter: 'border-[#273746]', boardInner: 'bg-[#17202A]', boardOuterDark: 'border-[#11171A]',
+      path: 'bg-[#D2B4DE]', wall: 'bg-[#17202A]',
+      winBg: 'bg-[#8E44AD]', winHeader: 'bg-[#732D91]', winBorder: 'border-[#5B2C6F]'
+    },
+    GoalSvg: PotionSVG,
+    levels: [
+      {
+        gridSize: 5, beeStart: { x: 2, y: 4, dir: 0 }, goal: { x: 2, y: 0 },
+        map: [
+          [0, 0, 1, 0, 0], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0]
+        ],
+        decorations: [{ x: 1, y: 2, emoji: '🕸️' }, { x: 3, y: 1, emoji: '🦇' }, { x: 0, y: 0, emoji: '🎃' }]
+      },
+      {
+        gridSize: 5, beeStart: { x: 4, y: 4, dir: 270 }, goal: { x: 0, y: 0 },
+        map: [
+          [1, 1, 1, 0, 0], [1, 0, 1, 0, 0], [1, 0, 1, 1, 1], [0, 0, 0, 0, 1], [0, 0, 0, 0, 1]
+        ],
+        decorations: [{ x: 2, y: 3, emoji: '🦇' }, { x: 0, y: 4, emoji: '🎃' }],
+        enemies: [{ axis: 'y', x: 0, min: 0, max: 2 }]
+      },
+      {
+        gridSize: 5, beeStart: { x: 0, y: 2, dir: 90 }, goal: { x: 4, y: 2 },
+        map: [
+          [0, 1, 1, 1, 0], [0, 1, 0, 1, 0], [1, 1, 0, 1, 1], [0, 0, 0, 0, 0], [0, 0, 0, 0, 0]
+        ],
+        decorations: [{ x: 2, y: 4, emoji: '🎃' }],
+        enemies: [{ axis: 'x', y: 0, min: 1, max: 3 }]
+      },
+      {
+        gridSize: 5, beeStart: { x: 0, y: 4, dir: 0 }, goal: { x: 4, y: 0 },
+        map: [
+          [0, 0, 0, 0, 1], [0, 1, 1, 1, 1], [0, 1, 0, 0, 0], [0, 1, 1, 1, 0], [1, 1, 0, 1, 0]
+        ],
+        decorations: [{ x: 0, y: 0, emoji: '🕸️' }, { x: 4, y: 4, emoji: '🦇' }],
+        enemies: [{ axis: 'x', y: 1, min: 1, max: 4 }, { axis: 'x', y: 3, min: 1, max: 3 }]
+      },
+      {
+        gridSize: 5, beeStart: { x: 2, y: 4, dir: 0 }, goal: { x: 2, y: 0 },
+        map: [
+          [0, 1, 1, 1, 0], [0, 1, 0, 1, 0], [0, 1, 1, 1, 0], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0]
+        ],
+        decorations: [{ x: 0, y: 4, emoji: '🎃' }, { x: 4, y: 4, emoji: '🎃' }],
+        enemies: [{ axis: 'x', y: 2, min: 1, max: 3 }]
+      },
+      {
+        gridSize: 5, beeStart: { x: 0, y: 4, dir: 0 }, goal: { x: 4, y: 0 },
+        map: [
+          [1, 1, 1, 1, 1], [1, 0, 0, 0, 1], [1, 0, 1, 0, 1], [1, 0, 1, 0, 1], [1, 1, 1, 0, 1]
+        ],
+        decorations: [{ x: 2, y: 1, emoji: '🕸️' }, { x: 4, y: 2, emoji: '🦇' }],
+        enemies: [{ axis: 'x', y: 0, min: 0, max: 4 }, { axis: 'x', y: 4, min: 0, max: 2 }]
+      }
+    ]
+  },
+  {
+    id: 'cyber',
+    title: 'Cyber City!',
+    subtitle: 'Dodge the rogue robots and grab the energy battery!',
+    enemyName: 'Rogue Bot',
+    enemyEmoji: '🤖',
+    colors: {
+      bg: 'bg-[#001f3f]', header: 'bg-[#001020]',
+      cardBorder: 'border-[#01FF70]', cardText: 'text-[#01FF70]', cardSub: 'text-[#2ECC40]',
+      boardOuter: 'border-[#0074D9]', boardInner: 'bg-[#001020]', boardOuterDark: 'border-[#000810]',
+      path: 'bg-[#7FDBFF]', wall: 'bg-[#001020]',
+      winBg: 'bg-[#0074D9]', winHeader: 'bg-[#0056b3]', winBorder: 'border-[#003f80]'
+    },
+    GoalSvg: BatterySVG,
+    levels: [
+      {
+        gridSize: 5, beeStart: { x: 2, y: 4, dir: 0 }, goal: { x: 2, y: 0 },
+        map: [
+          [0, 0, 1, 0, 0], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0]
+        ],
+        decorations: [{ x: 1, y: 2, emoji: '💻' }, { x: 3, y: 3, emoji: '📡' }, { x: 0, y: 0, emoji: '⚙️' }]
+      },
+      {
+        gridSize: 5, beeStart: { x: 0, y: 4, dir: 90 }, goal: { x: 4, y: 0 },
+        map: [
+          [0, 0, 1, 1, 1], [0, 0, 1, 0, 1], [1, 1, 1, 0, 1], [1, 0, 0, 0, 1], [1, 1, 1, 1, 1]
+        ],
+        decorations: [{ x: 1, y: 1, emoji: '📡' }, { x: 2, y: 3, emoji: '💻' }],
+        enemies: [{ axis: 'y', x: 2, min: 0, max: 2 }]
+      },
+      {
+        gridSize: 5, beeStart: { x: 2, y: 4, dir: 0 }, goal: { x: 2, y: 0 },
+        map: [
+          [0, 1, 1, 1, 0], [0, 1, 0, 1, 0], [0, 1, 1, 1, 0], [0, 0, 1, 0, 0], [0, 0, 1, 0, 0]
+        ],
+        decorations: [{ x: 0, y: 4, emoji: '⚙️' }, { x: 4, y: 4, emoji: '⚙️' }],
+        enemies: [{ axis: 'x', y: 2, min: 1, max: 3 }]
+      },
+      {
+        gridSize: 5, beeStart: { x: 0, y: 0, dir: 180 }, goal: { x: 4, y: 4 },
+        map: [
+          [1, 1, 0, 0, 0], [0, 1, 1, 0, 0], [0, 0, 1, 1, 0], [0, 0, 0, 1, 1], [0, 0, 0, 0, 1]
+        ],
+        decorations: [{ x: 0, y: 4, emoji: '💻' }, { x: 4, y: 0, emoji: '📡' }],
+        enemies: [{ axis: 'y', x: 2, min: 2, max: 4 }]
+      },
+      {
+        gridSize: 5, beeStart: { x: 0, y: 4, dir: 0 }, goal: { x: 4, y: 0 },
+        map: [
+          [1, 1, 1, 1, 1], [1, 0, 0, 0, 1], [1, 1, 1, 1, 1], [1, 0, 0, 0, 1], [1, 1, 1, 1, 1]
+        ],
+        decorations: [{ x: 2, y: 1, emoji: '⚙️' }, { x: 2, y: 3, emoji: '⚙️' }],
+        enemies: [{ axis: 'x', y: 0, min: 0, max: 4 }, { axis: 'x', y: 4, min: 0, max: 4 }]
+      },
+      {
+        gridSize: 5, beeStart: { x: 2, y: 4, dir: 0 }, goal: { x: 2, y: 0 },
+        map: [
+          [1, 1, 1, 1, 1], [1, 0, 1, 0, 1], [1, 1, 1, 1, 1], [1, 0, 1, 0, 1], [1, 1, 1, 1, 1]
+        ],
+        decorations: [{ x: 0, y: 0, emoji: '💻' }, { x: 4, y: 4, emoji: '📡' }],
+        enemies: [{ axis: 'x', y: 2, min: 0, max: 4 }, { axis: 'y', x: 1, min: 0, max: 2 }]
       }
     ]
   }
@@ -330,7 +375,7 @@ export default function App() {
   const historyRef = useRef(null);
   const crashRef = useRef(false);
 
-  // Background timer for Mummy animation
+  // Background timer for Enemy animation
   useEffect(() => {
     if (screen !== 'game') return;
     const timer = setInterval(() => {
@@ -343,18 +388,18 @@ export default function App() {
   useEffect(() => {
     if (screen !== 'game' || showWin || showCrash) return;
 
-    const hitMummy = currentLevel.mummies?.some(m => {
-      const L = m.max - m.min;
+    const hitEnemy = currentLevel.enemies?.some(e => {
+      const L = e.max - e.min;
       if (L === 0) return false;
       const cycle = L * 2;
       const pos = tick % cycle;
       const offset = pos > L ? cycle - pos : pos;
-      const mx = m.axis === 'x' ? m.min + offset : m.x || 0;
-      const my = m.axis === 'y' ? m.min + offset : m.y || 0;
-      return mx === beePos.x && my === beePos.y;
+      const ex = e.axis === 'x' ? e.min + offset : e.x || 0;
+      const ey = e.axis === 'y' ? e.min + offset : e.y || 0;
+      return ex === beePos.x && ey === beePos.y;
     });
 
-    if (hitMummy) {
+    if (hitEnemy) {
       crashRef.current = true;
       setShowCrash(true);
     }
@@ -434,7 +479,7 @@ export default function App() {
     let curDir = beePos.dir;
 
     for (let i = 0; i < commands.length; i++) {
-      if (crashRef.current) break; // Halt if mummy hits us during sequence
+      if (crashRef.current) break; // Halt if enemy hits us during sequence
 
       setExecIndex(i);
       const cmd = commands[i];
@@ -467,7 +512,6 @@ export default function App() {
         else if (facing === 270) nextX -= step; // West
 
         // Check map boundaries and path validation
-        // The real Bee-Bot app stops if it hits a wall/dirt on this specific level type
         if (nextX >= 0 && nextX < currentLevel.gridSize &&
           nextY >= 0 && nextY < currentLevel.gridSize &&
           currentLevel.map[nextY][nextX] === 1) { // 1 = Path
@@ -513,9 +557,9 @@ export default function App() {
 
   if (screen === 'levels') {
     return (
-      <div className={`fixed inset-0 ${currentWorld.colors.bg} flex flex-col font-sans select-none touch-none`}>
+      <div className={`fixed inset-0 ${currentWorld.colors.bg} flex flex-col font-sans select-none touch-none transition-colors duration-500`}>
         {/* Top Bar */}
-        <div className={`h-14 ${currentWorld.colors.header} flex items-center justify-between px-4 shadow-md z-10`}>
+        <div className={`h-14 ${currentWorld.colors.header} flex items-center justify-between px-4 shadow-md z-10 transition-colors duration-500`}>
           <button onClick={() => setScreen('splash')} className="text-white/70 hover:text-white transition-colors">
             <Home size={32} />
           </button>
@@ -527,7 +571,7 @@ export default function App() {
 
         <div className="flex-1 p-6 flex flex-col items-center overflow-y-auto w-full max-w-md mx-auto">
           {/* Header Card / World Selector */}
-          <div className={`bg-white w-full rounded-2xl p-6 shadow-lg mb-8 relative border-4 flex items-center gap-2 ${currentWorld.colors.cardBorder}`}>
+          <div className={`bg-white w-full rounded-2xl p-6 shadow-lg mb-8 relative border-4 flex items-center gap-2 ${currentWorld.colors.cardBorder} transition-colors duration-500`}>
 
             <button onClick={handlePrevWorld} className={`p-2 active:scale-90 transition-transform bg-black/5 rounded-full hover:bg-black/10 ${currentWorld.colors.cardText}`}>
               <ChevronLeft size={28} />
@@ -551,16 +595,16 @@ export default function App() {
           </div>
 
           {/* Level Grid */}
-          <div className={`${currentWorld.colors.boardInner} w-full rounded-2xl p-6 shadow-inner grid grid-cols-3 gap-6 justify-items-center`}>
+          <div className={`${currentWorld.colors.boardInner} w-full rounded-2xl p-6 shadow-inner grid grid-cols-3 gap-6 justify-items-center transition-colors duration-500`}>
             {currentWorld.levels.map((lvl, idx) => (
               <button
                 key={idx}
                 onClick={() => loadLevel(idx)}
                 className="relative flex flex-col items-center w-20 active:scale-95 transition-transform"
               >
-                <div className={`w-20 h-20 bg-white rounded-full p-3 shadow-md relative border-4 ${currentWorld.colors.cardBorder}`}>
+                <div className={`w-20 h-20 bg-white rounded-full p-3 shadow-md relative border-4 ${currentWorld.colors.cardBorder} transition-colors duration-500`}>
                   <currentWorld.GoalSvg />
-                  <div className={`absolute -top-1 -right-1 ${currentWorld.colors.header} text-white w-8 h-8 rounded-full flex items-center justify-center font-bold border-2 border-white shadow-sm`}>
+                  <div className={`absolute -top-1 -right-1 ${currentWorld.colors.header} text-white w-8 h-8 rounded-full flex items-center justify-center font-bold border-2 border-white shadow-sm transition-colors duration-500`}>
                     {idx + 1}
                   </div>
                 </div>
@@ -574,9 +618,9 @@ export default function App() {
   }
 
   return (
-    <div className={`fixed inset-0 ${currentWorld.colors.bg} flex flex-col font-sans select-none touch-none overflow-hidden`}>
+    <div className={`fixed inset-0 ${currentWorld.colors.bg} flex flex-col font-sans select-none touch-none overflow-hidden transition-colors duration-500`}>
       {/* Top Bar */}
-      <div className={`h-14 ${currentWorld.colors.header} flex items-center justify-between px-4 shadow-md z-20`}>
+      <div className={`h-14 ${currentWorld.colors.header} flex items-center justify-between px-4 shadow-md z-20 transition-colors duration-500`}>
         <button onClick={() => setScreen('levels')} className="text-white/70 hover:text-white transition-colors">
           <Home size={32} />
         </button>
@@ -616,9 +660,9 @@ export default function App() {
         </div>
 
         {/* The Fence & Board */}
-        <div className={`relative border-[16px] ${currentWorld.colors.boardOuter} rounded-xl shadow-2xl overflow-hidden ${currentWorld.colors.boardInner} mt-12`}>
+        <div className={`relative border-[16px] ${currentWorld.colors.boardOuter} rounded-xl shadow-2xl overflow-hidden ${currentWorld.colors.boardInner} mt-12 transition-colors duration-500`}>
           {/* Wooden fence posts decoration (CSS trick) */}
-          <div className={`absolute inset-[-16px] border-[16px] border-dashed ${currentWorld.colors.boardOuterDark} rounded-xl pointer-events-none opacity-50`}></div>
+          <div className={`absolute inset-[-16px] border-[16px] border-dashed ${currentWorld.colors.boardOuterDark} rounded-xl pointer-events-none opacity-50 transition-colors duration-500`}></div>
 
           <div
             className="grid relative"
@@ -635,7 +679,7 @@ export default function App() {
                 const isGoal = x === currentLevel.goal.x && y === currentLevel.goal.y;
 
                 return (
-                  <div key={`${x}-${y}`} className={`relative flex items-center justify-center border-[0.5px] border-black/10 ${isPath ? currentWorld.colors.path : currentWorld.colors.wall}`}>
+                  <div key={`${x}-${y}`} className={`relative flex items-center justify-center border-[0.5px] border-black/10 transition-colors duration-500 ${isPath ? currentWorld.colors.path : currentWorld.colors.wall}`}>
                     {/* Grid styling for path */}
                     {isPath && <div className="absolute inset-0 border-2 border-black/10 m-1 rounded-sm shadow-inner"></div>}
 
@@ -658,29 +702,29 @@ export default function App() {
               })
             )}
 
-            {/* Smoothly Animated Mummies Overlay */}
-            {currentLevel.mummies?.map((m, idx) => {
-              const L = m.max - m.min;
+            {/* Smoothly Animated Enemies Overlay */}
+            {currentLevel.enemies?.map((e, idx) => {
+              const L = e.max - e.min;
               const cycle = L > 0 ? L * 2 : 1;
               const pos = tick % cycle;
               const offset = pos > L ? cycle - pos : pos;
-              const mx = m.axis === 'x' ? m.min + offset : m.x || 0;
-              const my = m.axis === 'y' ? m.min + offset : m.y || 0;
+              const ex = e.axis === 'x' ? e.min + offset : e.x || 0;
+              const ey = e.axis === 'y' ? e.min + offset : e.y || 0;
 
               return (
                 <div
-                  key={`mummy-${idx}`}
+                  key={`enemy-${idx}`}
                   className="absolute z-15 transition-all flex items-center justify-center pointer-events-none"
                   style={{
                     transitionDuration: `${MOVE_DELAY}ms`,
                     transitionTimingFunction: 'linear',
                     width: `${100 / currentLevel.gridSize}%`,
                     height: `${100 / currentLevel.gridSize}%`,
-                    left: `${mx * (100 / currentLevel.gridSize)}%`,
-                    top: `${my * (100 / currentLevel.gridSize)}%`,
+                    left: `${ex * (100 / currentLevel.gridSize)}%`,
+                    top: `${ey * (100 / currentLevel.gridSize)}%`,
                   }}
                 >
-                  <span className="text-4xl drop-shadow-md z-10">🧟‍♂️</span>
+                  <span className="text-4xl drop-shadow-md z-10">{currentWorld.enemyEmoji || '👾'}</span>
                 </div>
               );
             })}
@@ -805,8 +849,12 @@ export default function App() {
               <h2 className="text-white text-2xl font-bold uppercase tracking-wide">Oh no!</h2>
             </div>
             <div className="p-8 flex flex-col items-center relative w-full overflow-hidden">
-              <h3 className="text-white text-3xl font-black mb-4 drop-shadow-lg text-center leading-tight">Watch out for<br />the Mummy!</h3>
-              <div className="text-7xl mb-6 drop-shadow-xl animate-bounce">🧟‍♂️</div>
+              <h3 className="text-white text-3xl font-black mb-4 drop-shadow-lg text-center leading-tight">
+                Watch out for<br />the {currentWorld.enemyName || 'Obstacle'}!
+              </h3>
+              <div className="text-7xl mb-6 drop-shadow-xl animate-bounce">
+                {currentWorld.enemyEmoji || '💥'}
+              </div>
               <button
                 onClick={resetGame}
                 className="bg-[#F1C40F] text-[#D35400] text-2xl font-black py-3 px-10 rounded-xl shadow-[0_6px_0_#F39C12] active:shadow-[0_0px_0_#F39C12] active:translate-y-[6px] transition-all border-2 border-[#FFF]"
