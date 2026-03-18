@@ -1,19 +1,14 @@
-import { useEffect, useRef, useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   Home,
   Settings,
   Pause,
   X as CloseIcon,
+  Play
 } from 'lucide-react';
 
 // --- SVGs & Assets ---
-type BeeBotSVGProps = {
-  dir?: number
-  style?: React.CSSProperties
-  className?: string
-}
-
-const BeeBotSVG = ({ dir = 0, style, className }: BeeBotSVGProps) => (
+const BeeBotSVG = ({ dir = 0, style, className }) => (
   <svg viewBox="0 0 100 100" style={{ transform: `rotate(${dir}deg)`, ...style }} className={`transition-transform duration-500 ease-in-out ${className}`}>
     {/* Shadow */}
     <ellipse cx="50" cy="55" rx="42" ry="46" fill="rgba(0,0,0,0.3)" />
@@ -49,76 +44,140 @@ const FlowerSVG = () => (
 );
 
 // Curved arrow SVGs specifically for the orange buttons
-type ArrowIconProps = {
-  width?: number
-  height?: number
-  strokeWidth?: number
-}
-
-const CurvedArrowLeft = ({ width = 36, height = 36, strokeWidth = 4 }: ArrowIconProps) => (
+const CurvedArrowLeft = ({ width = 36, height = 36, strokeWidth = 4 }) => (
   <svg viewBox="0 0 24 24" width={width} height={height} stroke="white" strokeWidth={strokeWidth} fill="none" strokeLinecap="round" strokeLinejoin="round">
     <path d="M 18 19 Q 18 9 10 9 L 4 9 M 10 15 L 4 9 L 10 3" />
   </svg>
 );
 
-const CurvedArrowRight = ({ width = 36, height = 36, strokeWidth = 4 }: ArrowIconProps) => (
+const CurvedArrowRight = ({ width = 36, height = 36, strokeWidth = 4 }) => (
   <svg viewBox="0 0 24 24" width={width} height={height} stroke="white" strokeWidth={strokeWidth} fill="none" strokeLinecap="round" strokeLinejoin="round">
     <path d="M 6 19 Q 6 9 14 9 L 20 9 M 14 15 L 20 9 L 14 3" />
   </svg>
 );
 
-const StraightArrowUp = ({ width = 36, height = 36, strokeWidth = 4 }: ArrowIconProps) => (
+const StraightArrowUp = ({ width = 36, height = 36, strokeWidth = 4 }) => (
   <svg viewBox="0 0 24 24" width={width} height={height} stroke="white" strokeWidth={strokeWidth} fill="none" strokeLinecap="round" strokeLinejoin="round">
     <path d="M 12 21 L 12 3 M 6 9 L 12 3 L 18 9" />
   </svg>
 );
 
-const StraightArrowDown = ({ width = 36, height = 36, strokeWidth = 4 }: ArrowIconProps) => (
+const StraightArrowDown = ({ width = 36, height = 36, strokeWidth = 4 }) => (
   <svg viewBox="0 0 24 24" width={width} height={height} stroke="white" strokeWidth={strokeWidth} fill="none" strokeLinecap="round" strokeLinejoin="round">
     <path d="M 12 3 L 12 21 M 6 15 L 12 21 L 18 15" />
   </svg>
 );
 
-// --- Game Data ---
-type Dir = 0 | 90 | 180 | 270
-
-type BeePos = {
-  x: number
-  y: number
-  dir: number
-}
-
-type Command = 'FORWARD' | 'BACKWARD' | 'LEFT' | 'RIGHT' | 'PAUSE'
-
-type Screen = 'splash' | 'levels' | 'game'
-
-const GARDEN_LEVEL = {
-  gridSize: 5,
-  beeStart: { x: 4, y: 3, dir: 0 as Dir }, // Facing North (0 deg)
-  goal: { x: 1, y: 3 },
-  // 5x5 Grid Definition: 0 = Dirt, 1 = Path
-  map: [
-    [0, 0, 0, 0, 0],
-    [0, 1, 1, 1, 1],
-    [0, 1, 0, 0, 1],
-    [0, 1, 0, 0, 1], // Goal is at [3][1] (y,x), Bee at [3][4]
-    [0, 0, 0, 0, 0],
-  ]
-};
+// --- Game Data (6 Unique Levels) ---
+const GARDEN_LEVELS = [
+  {
+    // Level 1: Simple straight line
+    gridSize: 5,
+    beeStart: { x: 2, y: 4, dir: 0 }, // Facing North
+    goal: { x: 2, y: 0 },
+    map: [
+      [0, 0, 1, 0, 0],
+      [0, 0, 1, 0, 0],
+      [0, 0, 1, 0, 0],
+      [0, 0, 1, 0, 0],
+      [0, 0, 1, 0, 0]
+    ],
+    veggies: [{ x: 1, y: 2 }, { x: 3, y: 3 }],
+    plants: [{ x: 4, y: 1 }, { x: 0, y: 0 }]
+  },
+  {
+    // Level 2: One turn
+    gridSize: 5,
+    beeStart: { x: 1, y: 4, dir: 0 },
+    goal: { x: 3, y: 2 },
+    map: [
+      [0, 0, 0, 0, 0],
+      [0, 0, 0, 0, 0],
+      [0, 0, 0, 1, 0],
+      [0, 1, 1, 1, 0],
+      [0, 1, 0, 0, 0]
+    ],
+    veggies: [{ x: 2, y: 2 }],
+    plants: [{ x: 4, y: 4 }, { x: 0, y: 1 }]
+  },
+  {
+    // Level 3: Z-Shape
+    gridSize: 5,
+    beeStart: { x: 1, y: 4, dir: 0 },
+    goal: { x: 3, y: 1 },
+    map: [
+      [0, 0, 0, 0, 0],
+      [0, 0, 0, 1, 0],
+      [0, 1, 1, 1, 0],
+      [0, 1, 0, 0, 0],
+      [0, 1, 0, 0, 0]
+    ],
+    veggies: [{ x: 2, y: 4 }, { x: 2, y: 1 }],
+    plants: [{ x: 0, y: 2 }, { x: 4, y: 1 }]
+  },
+  {
+    // Level 4: U-Shape Box
+    gridSize: 5,
+    beeStart: { x: 3, y: 4, dir: 0 },
+    goal: { x: 1, y: 4 },
+    map: [
+      [0, 0, 0, 0, 0],
+      [0, 1, 1, 1, 0],
+      [0, 1, 0, 1, 0],
+      [0, 1, 0, 1, 0],
+      [0, 1, 0, 1, 0]
+    ],
+    veggies: [{ x: 2, y: 3 }, { x: 2, y: 2 }],
+    plants: [{ x: 0, y: 0 }, { x: 4, y: 4 }]
+  },
+  {
+    // Level 5: The Snake/Spiral
+    gridSize: 5,
+    beeStart: { x: 0, y: 4, dir: 0 },
+    goal: { x: 2, y: 2 },
+    map: [
+      [1, 1, 1, 1, 1],
+      [1, 0, 0, 0, 1],
+      [1, 0, 1, 0, 1],
+      [1, 0, 1, 1, 1],
+      [1, 0, 0, 0, 0]
+    ],
+    veggies: [{ x: 1, y: 2 }, { x: 3, y: 2 }],
+    plants: [{ x: 1, y: 4 }, { x: 2, y: 1 }]
+  },
+  {
+    // Level 6: The Original Complex Garden
+    gridSize: 5,
+    beeStart: { x: 4, y: 3, dir: 0 },
+    goal: { x: 1, y: 3 },
+    map: [
+      [0, 0, 0, 0, 0],
+      [0, 1, 1, 1, 1],
+      [0, 1, 0, 0, 1],
+      [0, 1, 0, 0, 1],
+      [0, 0, 0, 0, 0],
+    ],
+    veggies: [{ x: 2, y: 2 }, { x: 3, y: 2 }, { x: 2, y: 3 }],
+    plants: [{ x: 0, y: 4 }]
+  }
+];
 
 const MOVE_DELAY = 600;
 
 export default function App() {
-  const [screen, setScreen] = useState<Screen>('splash'); // 'splash', 'levels', 'game'
+  const [screen, setScreen] = useState('splash'); // 'splash', 'levels', 'game'
 
   // Game State
-  const [beePos, setBeePos] = useState<BeePos>({ ...GARDEN_LEVEL.beeStart });
-  const [commands, setCommands] = useState<Command[]>([]);
+  const [currentLevelIdx, setCurrentLevelIdx] = useState(0);
+  const currentLevel = GARDEN_LEVELS[currentLevelIdx];
+
+  const [beePos, setBeePos] = useState({ ...currentLevel.beeStart });
+  const [commands, setCommands] = useState([]);
   const [isExecuting, setIsExecuting] = useState(false);
   const [showWin, setShowWin] = useState(false);
   const [execIndex, setExecIndex] = useState(-1);
 
-  const historyRef = useRef<HTMLDivElement | null>(null);
+  const historyRef = useRef(null);
 
   useEffect(() => {
     if (historyRef.current) {
@@ -132,7 +191,18 @@ export default function App() {
     }
   };
 
-  const addCommand = (cmd: Command) => {
+  const loadLevel = (idx) => {
+    triggerVibrate();
+    setCurrentLevelIdx(idx);
+    setBeePos({ ...GARDEN_LEVELS[idx].beeStart });
+    setCommands([]);
+    setShowWin(false);
+    setIsExecuting(false);
+    setExecIndex(-1);
+    setScreen('game');
+  };
+
+  const addCommand = (cmd) => {
     if (isExecuting || showWin || commands.length >= 40) return;
     triggerVibrate();
     setCommands(prev => [...prev, cmd]);
@@ -146,7 +216,7 @@ export default function App() {
   };
 
   const resetGame = () => {
-    setBeePos({ ...GARDEN_LEVEL.beeStart });
+    setBeePos({ ...currentLevel.beeStart });
     setCommands([]);
     setShowWin(false);
     setIsExecuting(false);
@@ -194,9 +264,9 @@ export default function App() {
 
         // Check map boundaries and path validation
         // The real Bee-Bot app stops if it hits a wall/dirt on this specific level type
-        if (nextX >= 0 && nextX < GARDEN_LEVEL.gridSize &&
-          nextY >= 0 && nextY < GARDEN_LEVEL.gridSize &&
-          GARDEN_LEVEL.map[nextY][nextX] === 1) { // 1 = Path
+        if (nextX >= 0 && nextX < currentLevel.gridSize &&
+          nextY >= 0 && nextY < currentLevel.gridSize &&
+          currentLevel.map[nextY][nextX] === 1) { // 1 = Path
           curX = nextX;
           curY = nextY;
           setBeePos({ x: curX, y: curY, dir: curDir });
@@ -208,7 +278,7 @@ export default function App() {
     }
 
     // Check Win
-    if (curX === GARDEN_LEVEL.goal.x && curY === GARDEN_LEVEL.goal.y) {
+    if (curX === currentLevel.goal.x && curY === currentLevel.goal.y) {
       setTimeout(() => setShowWin(true), 500);
     }
 
@@ -267,11 +337,7 @@ export default function App() {
             {[1, 2, 3, 4, 5, 6].map((lvl) => (
               <button
                 key={lvl}
-                onClick={() => {
-                  triggerVibrate();
-                  resetGame();
-                  setScreen('game');
-                }}
+                onClick={() => loadLevel(lvl - 1)}
                 className="relative flex flex-col items-center w-20 active:scale-95 transition-transform"
               >
                 <div className="w-20 h-20 bg-white rounded-full p-2 shadow-md relative border-2 border-[#5CA42A]">
@@ -339,20 +405,20 @@ export default function App() {
           <div
             className="grid relative"
             style={{
-              gridTemplateColumns: `repeat(${GARDEN_LEVEL.gridSize}, 1fr)`,
-              gridTemplateRows: `repeat(${GARDEN_LEVEL.gridSize}, 1fr)`,
+              gridTemplateColumns: `repeat(${currentLevel.gridSize}, 1fr)`,
+              gridTemplateRows: `repeat(${currentLevel.gridSize}, 1fr)`,
               width: 'min(90vw, 500px)',
               height: 'min(90vw, 500px)',
             }}
           >
-            {GARDEN_LEVEL.map.map((row, y) =>
+            {currentLevel.map.map((row, y) =>
               row.map((cell, x) => {
                 const isPath = cell === 1;
-                const isGoal = x === GARDEN_LEVEL.goal.x && y === GARDEN_LEVEL.goal.y;
+                const isGoal = x === currentLevel.goal.x && y === currentLevel.goal.y;
 
-                // Decorative cabbages on dirt
-                const isDirtWithVeg = !isPath && ((x === 2 && y === 2) || (x === 3 && y === 2) || (x === 2 && y === 3));
-                const isDirtWithPlant = !isPath && (x === 0 && y === 4);
+                // Decorative cabbages and plants derived from level data
+                const isDirtWithVeg = !isPath && currentLevel.veggies?.some(v => v.x === x && v.y === y);
+                const isDirtWithPlant = !isPath && currentLevel.plants?.some(p => p.x === x && p.y === y);
 
                 return (
                   <div key={`${x}-${y}`} className={`relative flex items-center justify-center border-[0.5px] border-black/10 ${isPath ? 'bg-[#E6E6E6]' : 'bg-[#7B5836]'}`}>
@@ -378,10 +444,10 @@ export default function App() {
             <div
               className="absolute z-20 transition-all duration-500 ease-in-out flex items-center justify-center pointer-events-none"
               style={{
-                width: `${100 / GARDEN_LEVEL.gridSize}%`,
-                height: `${100 / GARDEN_LEVEL.gridSize}%`,
-                left: `${beePos.x * (100 / GARDEN_LEVEL.gridSize)}%`,
-                top: `${beePos.y * (100 / GARDEN_LEVEL.gridSize)}%`,
+                width: `${100 / currentLevel.gridSize}%`,
+                height: `${100 / currentLevel.gridSize}%`,
+                left: `${beePos.x * (100 / currentLevel.gridSize)}%`,
+                top: `${beePos.y * (100 / currentLevel.gridSize)}%`,
               }}
             >
               <BeeBotSVG dir={beePos.dir} className="w-[90%] h-[90%]" />
@@ -490,15 +556,7 @@ export default function App() {
 }
 
 // Custom highly-specific button component for the floating controls
-type ControlButtonProps = {
-  shape: 'pill-v' | 'pill-h' | 'circle' | 'square'
-  color: string
-  shadow: string
-  icon: React.ReactNode
-  onClick: () => void
-}
-
-const ControlButton = ({ shape, color, shadow, icon, onClick }: ControlButtonProps) => {
+const ControlButton = ({ shape, color, shadow, icon, onClick }) => {
   let sizeClasses = '';
 
   if (shape === 'pill-v') sizeClasses = 'w-[60px] h-[80px] rounded-full';
