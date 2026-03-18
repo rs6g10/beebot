@@ -4,7 +4,9 @@ import {
   Settings,
   Pause,
   X as CloseIcon,
-  Play
+  Play,
+  ChevronLeft,
+  ChevronRight
 } from 'lucide-react';
 
 // --- SVGs & Assets ---
@@ -43,6 +45,15 @@ const FlowerSVG = () => (
   </svg>
 );
 
+const DiamondSVG = () => (
+  <svg viewBox="0 0 100 100" className="w-full h-full drop-shadow-md">
+    <polygon points="50,90 10,40 30,15 70,15 90,40" fill="#00E5FF" stroke="#00B8D4" strokeWidth="4" strokeLinejoin="round" />
+    <polygon points="50,90 30,15 70,15" fill="#84FFFF" stroke="#00B8D4" strokeWidth="2" strokeLinejoin="round" />
+    <line x1="10" y1="40" x2="90" y2="40" stroke="#00B8D4" strokeWidth="4" strokeLinecap="round" />
+    <line x1="50" y1="40" x2="50" y2="90" stroke="#00B8D4" strokeWidth="4" strokeLinecap="round" />
+  </svg>
+);
+
 // Curved arrow SVGs specifically for the orange buttons
 const CurvedArrowLeft = ({ width = 36, height = 36, strokeWidth = 4 }) => (
   <svg viewBox="0 0 24 24" width={width} height={height} stroke="white" strokeWidth={strokeWidth} fill="none" strokeLinecap="round" strokeLinejoin="round">
@@ -68,97 +79,231 @@ const StraightArrowDown = ({ width = 36, height = 36, strokeWidth = 4 }) => (
   </svg>
 );
 
-// --- Game Data (6 Unique Levels) ---
-const GARDEN_LEVELS = [
+// --- Game Data (Worlds & Levels) ---
+const WORLDS = [
   {
-    // Level 1: Simple straight line
-    gridSize: 5,
-    beeStart: { x: 2, y: 4, dir: 0 }, // Facing North
-    goal: { x: 2, y: 0 },
-    map: [
-      [0, 0, 1, 0, 0],
-      [0, 0, 1, 0, 0],
-      [0, 0, 1, 0, 0],
-      [0, 0, 1, 0, 0],
-      [0, 0, 1, 0, 0]
-    ],
-    veggies: [{ x: 1, y: 2 }, { x: 3, y: 3 }],
-    plants: [{ x: 4, y: 1 }, { x: 0, y: 0 }]
+    id: 'garden',
+    title: 'Bee-Bot in the Garden!',
+    subtitle: 'Can you help Bee-Bot on his mission to pollinate the flowers in the garden?',
+    colors: {
+      bg: 'bg-[#6BB936]',
+      header: 'bg-[#48872F]',
+      cardBorder: 'border-[#A5D289]',
+      cardText: 'text-[#4B5E9F]',
+      cardSub: 'text-[#E08A27]',
+      boardOuter: 'border-[#A2703D]',
+      boardInner: 'bg-[#7B5836]',
+      boardOuterDark: 'border-[#8A5A2B]',
+      path: 'bg-[#E6E6E6]',
+      wall: 'bg-[#7B5836]',
+      winBg: 'bg-[#539A3A]',
+      winHeader: 'bg-[#71BA49]',
+      winBorder: 'border-[#3F7C28]'
+    },
+    GoalSvg: FlowerSVG,
+    levels: [
+      {
+        gridSize: 5,
+        beeStart: { x: 2, y: 4, dir: 0 },
+        goal: { x: 2, y: 0 },
+        map: [
+          [0, 0, 1, 0, 0],
+          [0, 0, 1, 0, 0],
+          [0, 0, 1, 0, 0],
+          [0, 0, 1, 0, 0],
+          [0, 0, 1, 0, 0]
+        ],
+        decorations: [
+          { x: 1, y: 2, emoji: '🥬' }, { x: 3, y: 3, emoji: '🥬' },
+          { x: 4, y: 1, emoji: '🌿' }, { x: 0, y: 0, emoji: '🌿' }
+        ]
+      },
+      {
+        gridSize: 5,
+        beeStart: { x: 1, y: 4, dir: 0 },
+        goal: { x: 3, y: 2 },
+        map: [
+          [0, 0, 0, 0, 0],
+          [0, 0, 0, 0, 0],
+          [0, 0, 0, 1, 0],
+          [0, 1, 1, 1, 0],
+          [0, 1, 0, 0, 0]
+        ],
+        decorations: [
+          { x: 2, y: 2, emoji: '🥬' },
+          { x: 4, y: 4, emoji: '🌿' }, { x: 0, y: 1, emoji: '🌿' }
+        ]
+      },
+      {
+        gridSize: 5,
+        beeStart: { x: 1, y: 4, dir: 0 },
+        goal: { x: 3, y: 1 },
+        map: [
+          [0, 0, 0, 0, 0],
+          [0, 0, 0, 1, 0],
+          [0, 1, 1, 1, 0],
+          [0, 1, 0, 0, 0],
+          [0, 1, 0, 0, 0]
+        ],
+        decorations: [
+          { x: 2, y: 4, emoji: '🥬' }, { x: 2, y: 1, emoji: '🥬' },
+          { x: 0, y: 2, emoji: '🌿' }, { x: 4, y: 1, emoji: '🌿' }
+        ]
+      },
+      {
+        gridSize: 5,
+        beeStart: { x: 3, y: 4, dir: 0 },
+        goal: { x: 1, y: 4 },
+        map: [
+          [0, 0, 0, 0, 0],
+          [0, 1, 1, 1, 0],
+          [0, 1, 0, 1, 0],
+          [0, 1, 0, 1, 0],
+          [0, 1, 0, 1, 0]
+        ],
+        decorations: [
+          { x: 2, y: 3, emoji: '🥬' }, { x: 2, y: 2, emoji: '🥬' },
+          { x: 0, y: 0, emoji: '🌿' }, { x: 4, y: 4, emoji: '🌿' }
+        ]
+      },
+      {
+        gridSize: 5,
+        beeStart: { x: 0, y: 4, dir: 0 },
+        goal: { x: 2, y: 2 },
+        map: [
+          [1, 1, 1, 1, 1],
+          [1, 0, 0, 0, 1],
+          [1, 0, 1, 0, 1],
+          [1, 0, 1, 1, 1],
+          [1, 0, 0, 0, 0]
+        ],
+        decorations: [
+          { x: 1, y: 2, emoji: '🥬' }, { x: 3, y: 2, emoji: '🥬' },
+          { x: 1, y: 4, emoji: '🌿' }, { x: 2, y: 1, emoji: '🌿' }
+        ]
+      },
+      {
+        gridSize: 5,
+        beeStart: { x: 4, y: 3, dir: 0 },
+        goal: { x: 1, y: 3 },
+        map: [
+          [0, 0, 0, 0, 0],
+          [0, 1, 1, 1, 1],
+          [0, 1, 0, 0, 1],
+          [0, 1, 0, 0, 1],
+          [0, 0, 0, 0, 0],
+        ],
+        decorations: [
+          { x: 2, y: 2, emoji: '🥬' }, { x: 3, y: 2, emoji: '🥬' }, { x: 2, y: 3, emoji: '🥬' },
+          { x: 0, y: 4, emoji: '🌿' }
+        ]
+      }
+    ]
   },
   {
-    // Level 2: One turn
-    gridSize: 5,
-    beeStart: { x: 1, y: 4, dir: 0 },
-    goal: { x: 3, y: 2 },
-    map: [
-      [0, 0, 0, 0, 0],
-      [0, 0, 0, 0, 0],
-      [0, 0, 0, 1, 0],
-      [0, 1, 1, 1, 0],
-      [0, 1, 0, 0, 0]
-    ],
-    veggies: [{ x: 2, y: 2 }],
-    plants: [{ x: 4, y: 4 }, { x: 0, y: 1 }]
-  },
-  {
-    // Level 3: Z-Shape
-    gridSize: 5,
-    beeStart: { x: 1, y: 4, dir: 0 },
-    goal: { x: 3, y: 1 },
-    map: [
-      [0, 0, 0, 0, 0],
-      [0, 0, 0, 1, 0],
-      [0, 1, 1, 1, 0],
-      [0, 1, 0, 0, 0],
-      [0, 1, 0, 0, 0]
-    ],
-    veggies: [{ x: 2, y: 4 }, { x: 2, y: 1 }],
-    plants: [{ x: 0, y: 2 }, { x: 4, y: 1 }]
-  },
-  {
-    // Level 4: U-Shape Box
-    gridSize: 5,
-    beeStart: { x: 3, y: 4, dir: 0 },
-    goal: { x: 1, y: 4 },
-    map: [
-      [0, 0, 0, 0, 0],
-      [0, 1, 1, 1, 0],
-      [0, 1, 0, 1, 0],
-      [0, 1, 0, 1, 0],
-      [0, 1, 0, 1, 0]
-    ],
-    veggies: [{ x: 2, y: 3 }, { x: 2, y: 2 }],
-    plants: [{ x: 0, y: 0 }, { x: 4, y: 4 }]
-  },
-  {
-    // Level 5: The Snake/Spiral
-    gridSize: 5,
-    beeStart: { x: 0, y: 4, dir: 0 },
-    goal: { x: 2, y: 2 },
-    map: [
-      [1, 1, 1, 1, 1],
-      [1, 0, 0, 0, 1],
-      [1, 0, 1, 0, 1],
-      [1, 0, 1, 1, 1],
-      [1, 0, 0, 0, 0]
-    ],
-    veggies: [{ x: 1, y: 2 }, { x: 3, y: 2 }],
-    plants: [{ x: 1, y: 4 }, { x: 2, y: 1 }]
-  },
-  {
-    // Level 6: The Original Complex Garden
-    gridSize: 5,
-    beeStart: { x: 4, y: 3, dir: 0 },
-    goal: { x: 1, y: 3 },
-    map: [
-      [0, 0, 0, 0, 0],
-      [0, 1, 1, 1, 1],
-      [0, 1, 0, 0, 1],
-      [0, 1, 0, 0, 1],
-      [0, 0, 0, 0, 0],
-    ],
-    veggies: [{ x: 2, y: 2 }, { x: 3, y: 2 }, { x: 2, y: 3 }],
-    plants: [{ x: 0, y: 4 }]
+    id: 'egypt',
+    title: 'Ancient Egypt Adventure!',
+    subtitle: 'Navigate the pyramid maze, avoid the mummies, and find the hidden gems!',
+    colors: {
+      bg: 'bg-[#ECA754]',
+      header: 'bg-[#C7822B]',
+      cardBorder: 'border-[#FAD7A1]',
+      cardText: 'text-[#5C3A21]',
+      cardSub: 'text-[#9C5311]',
+      boardOuter: 'border-[#D4AC0D]',
+      boardInner: 'bg-[#B9770E]',
+      boardOuterDark: 'border-[#9A6006]',
+      path: 'bg-[#FDEBD0]',
+      wall: 'bg-[#B9770E]',
+      winBg: 'bg-[#ECA754]',
+      winHeader: 'bg-[#D4AC0D]',
+      winBorder: 'border-[#B9770E]'
+    },
+    GoalSvg: DiamondSVG,
+    levels: [
+      {
+        gridSize: 5,
+        beeStart: { x: 2, y: 4, dir: 0 },
+        goal: { x: 2, y: 0 },
+        map: [
+          [0, 0, 1, 0, 0],
+          [0, 0, 1, 0, 0],
+          [0, 0, 1, 0, 0],
+          [0, 0, 1, 0, 0],
+          [0, 0, 1, 0, 0]
+        ],
+        decorations: [{ x: 1, y: 2, emoji: '🏺' }, { x: 3, y: 2, emoji: '🏺' }, { x: 0, y: 0, emoji: '🌴' }]
+      },
+      {
+        gridSize: 5,
+        beeStart: { x: 0, y: 4, dir: 90 },
+        goal: { x: 4, y: 0 },
+        map: [
+          [0, 0, 0, 0, 1],
+          [0, 0, 0, 0, 1],
+          [0, 0, 0, 0, 1],
+          [0, 0, 0, 0, 1],
+          [1, 1, 1, 1, 1]
+        ],
+        decorations: [{ x: 2, y: 2, emoji: '🐪' }, { x: 2, y: 3, emoji: '🏺' }]
+      },
+      {
+        gridSize: 5,
+        beeStart: { x: 0, y: 4, dir: 0 },
+        goal: { x: 4, y: 0 },
+        map: [
+          [0, 0, 1, 1, 1],
+          [0, 0, 1, 0, 0],
+          [0, 0, 1, 1, 0],
+          [1, 1, 1, 0, 0],
+          [1, 0, 0, 0, 0]
+        ],
+        decorations: [{ x: 1, y: 1, emoji: '🏺' }],
+        mummies: [{ axis: 'x', y: 0, min: 2, max: 4 }]
+      },
+      {
+        gridSize: 5,
+        beeStart: { x: 2, y: 4, dir: 0 },
+        goal: { x: 2, y: 0 },
+        map: [
+          [0, 0, 1, 0, 0],
+          [0, 1, 1, 1, 0],
+          [0, 1, 0, 1, 0],
+          [0, 1, 1, 1, 0],
+          [0, 0, 1, 0, 0]
+        ],
+        decorations: [{ x: 0, y: 4, emoji: '🌴' }, { x: 4, y: 4, emoji: '🌴' }],
+        mummies: [{ axis: 'x', y: 1, min: 1, max: 3 }]
+      },
+      {
+        gridSize: 5,
+        beeStart: { x: 4, y: 4, dir: 270 },
+        goal: { x: 2, y: 2 },
+        map: [
+          [1, 1, 1, 1, 1],
+          [1, 0, 0, 0, 1],
+          [1, 0, 1, 0, 1],
+          [1, 0, 1, 1, 1],
+          [0, 0, 0, 0, 1]
+        ],
+        decorations: [{ x: 2, y: 3, emoji: '🏺' }],
+        mummies: [{ axis: 'y', x: 4, min: 0, max: 4 }]
+      },
+      {
+        gridSize: 5,
+        beeStart: { x: 0, y: 4, dir: 0 },
+        goal: { x: 4, y: 2 },
+        map: [
+          [1, 1, 1, 1, 0],
+          [1, 0, 0, 1, 0],
+          [1, 0, 1, 1, 1],
+          [1, 0, 1, 0, 0],
+          [1, 1, 1, 0, 0]
+        ],
+        decorations: [{ x: 4, y: 4, emoji: '🐪' }, { x: 1, y: 3, emoji: '🏺' }],
+        mummies: [{ axis: 'y', x: 0, min: 0, max: 4 }]
+      }
+    ]
   }
 ];
 
@@ -168,16 +313,52 @@ export default function App() {
   const [screen, setScreen] = useState('splash'); // 'splash', 'levels', 'game'
 
   // Game State
+  const [worldIdx, setWorldIdx] = useState(0);
+  const currentWorld = WORLDS[worldIdx];
+
   const [currentLevelIdx, setCurrentLevelIdx] = useState(0);
-  const currentLevel = GARDEN_LEVELS[currentLevelIdx];
+  const currentLevel = currentWorld.levels[currentLevelIdx];
 
   const [beePos, setBeePos] = useState({ ...currentLevel.beeStart });
   const [commands, setCommands] = useState([]);
   const [isExecuting, setIsExecuting] = useState(false);
   const [showWin, setShowWin] = useState(false);
+  const [showCrash, setShowCrash] = useState(false);
   const [execIndex, setExecIndex] = useState(-1);
+  const [tick, setTick] = useState(0);
 
   const historyRef = useRef(null);
+  const crashRef = useRef(false);
+
+  // Background timer for Mummy animation
+  useEffect(() => {
+    if (screen !== 'game') return;
+    const timer = setInterval(() => {
+      setTick(t => t + 1);
+    }, MOVE_DELAY);
+    return () => clearInterval(timer);
+  }, [screen]);
+
+  // Collision detection logic
+  useEffect(() => {
+    if (screen !== 'game' || showWin || showCrash) return;
+
+    const hitMummy = currentLevel.mummies?.some(m => {
+      const L = m.max - m.min;
+      if (L === 0) return false;
+      const cycle = L * 2;
+      const pos = tick % cycle;
+      const offset = pos > L ? cycle - pos : pos;
+      const mx = m.axis === 'x' ? m.min + offset : m.x || 0;
+      const my = m.axis === 'y' ? m.min + offset : m.y || 0;
+      return mx === beePos.x && my === beePos.y;
+    });
+
+    if (hitMummy) {
+      crashRef.current = true;
+      setShowCrash(true);
+    }
+  }, [tick, beePos, screen, currentLevel, showWin, showCrash]);
 
   useEffect(() => {
     if (historyRef.current) {
@@ -191,19 +372,37 @@ export default function App() {
     }
   };
 
+  const handleNextWorld = () => {
+    triggerVibrate();
+    setWorldIdx((prev) => {
+      setCurrentLevelIdx(0);
+      return (prev + 1) % WORLDS.length;
+    });
+  };
+
+  const handlePrevWorld = () => {
+    triggerVibrate();
+    setWorldIdx((prev) => {
+      setCurrentLevelIdx(0);
+      return (prev - 1 + WORLDS.length) % WORLDS.length;
+    });
+  };
+
   const loadLevel = (idx) => {
     triggerVibrate();
     setCurrentLevelIdx(idx);
-    setBeePos({ ...GARDEN_LEVELS[idx].beeStart });
+    setBeePos({ ...currentWorld.levels[idx].beeStart });
     setCommands([]);
     setShowWin(false);
+    setShowCrash(false);
+    crashRef.current = false;
     setIsExecuting(false);
     setExecIndex(-1);
     setScreen('game');
   };
 
   const addCommand = (cmd) => {
-    if (isExecuting || showWin || commands.length >= 40) return;
+    if (isExecuting || showWin || showCrash || commands.length >= 40) return;
     triggerVibrate();
     setCommands(prev => [...prev, cmd]);
   };
@@ -219,12 +418,14 @@ export default function App() {
     setBeePos({ ...currentLevel.beeStart });
     setCommands([]);
     setShowWin(false);
+    setShowCrash(false);
+    crashRef.current = false;
     setIsExecuting(false);
     setExecIndex(-1);
   };
 
   const executeProgram = async () => {
-    if (isExecuting || commands.length === 0 || showWin) return;
+    if (isExecuting || commands.length === 0 || showWin || showCrash) return;
     triggerVibrate();
     setIsExecuting(true);
 
@@ -233,6 +434,8 @@ export default function App() {
     let curDir = beePos.dir;
 
     for (let i = 0; i < commands.length; i++) {
+      if (crashRef.current) break; // Halt if mummy hits us during sequence
+
       setExecIndex(i);
       const cmd = commands[i];
 
@@ -242,6 +445,7 @@ export default function App() {
       }
 
       await new Promise(r => setTimeout(r, MOVE_DELAY));
+      if (crashRef.current) break; // Re-check after waiting
 
       if (cmd === 'LEFT') {
         curDir -= 90;
@@ -271,20 +475,20 @@ export default function App() {
           curY = nextY;
           setBeePos({ x: curX, y: curY, dir: curDir });
         } else {
-          // Hit a wall/dirt - error state. Original app just stops or makes a sound.
+          // Hit a wall/dirt - Original app just stops or makes a sound.
           break;
         }
       }
     }
 
     // Check Win
-    if (curX === currentLevel.goal.x && curY === currentLevel.goal.y) {
+    if (!crashRef.current && curX === currentLevel.goal.x && curY === currentLevel.goal.y) {
       setTimeout(() => setShowWin(true), 500);
     }
 
     setIsExecuting(false);
     setExecIndex(-1);
-    setCommands([]);
+    if (!crashRef.current) setCommands([]);
   };
 
   // --- Screens ---
@@ -309,44 +513,58 @@ export default function App() {
 
   if (screen === 'levels') {
     return (
-      <div className="fixed inset-0 bg-[#539A3A] flex flex-col font-sans select-none touch-none">
+      <div className={`fixed inset-0 ${currentWorld.colors.bg} flex flex-col font-sans select-none touch-none`}>
         {/* Top Bar */}
-        <div className="h-14 bg-[#48872F] flex items-center justify-between px-4 shadow-md z-10">
-          <button onClick={() => setScreen('splash')} className="text-[#A5D289] hover:text-white transition-colors">
+        <div className={`h-14 ${currentWorld.colors.header} flex items-center justify-between px-4 shadow-md z-10`}>
+          <button onClick={() => setScreen('splash')} className="text-white/70 hover:text-white transition-colors">
             <Home size={32} />
           </button>
           <h1 className="text-white text-xl font-bold">Bee-Bot<sup className="text-xs">®</sup></h1>
-          <button className="text-[#A5D289] hover:text-white transition-colors">
+          <button className="text-white/70 hover:text-white transition-colors">
             <Settings size={32} />
           </button>
         </div>
 
-        <div className="flex-1 p-6 flex flex-col items-center overflow-y-auto">
-          {/* Header Card */}
-          <div className="bg-white w-full max-w-md rounded-2xl p-6 shadow-lg mb-8 relative border-4 border-[#A5D289]">
-            <h2 className="text-[#4B5E9F] text-2xl font-bold text-center mb-2">Bee-Bot in the Garden!</h2>
-            <p className="text-[#E08A27] text-center font-semibold">
-              Can you help Bee-Bot on his mission to pollinate the flowers in the garden?
-            </p>
+        <div className="flex-1 p-6 flex flex-col items-center overflow-y-auto w-full max-w-md mx-auto">
+          {/* Header Card / World Selector */}
+          <div className={`bg-white w-full rounded-2xl p-6 shadow-lg mb-8 relative border-4 flex items-center gap-2 ${currentWorld.colors.cardBorder}`}>
+
+            <button onClick={handlePrevWorld} className={`p-2 active:scale-90 transition-transform bg-black/5 rounded-full hover:bg-black/10 ${currentWorld.colors.cardText}`}>
+              <ChevronLeft size={28} />
+            </button>
+
+            <div className="flex-1 text-center">
+              <h2 className={`text-xl font-bold mb-2 ${currentWorld.colors.cardText}`}>{currentWorld.title}</h2>
+              <p className={`text-sm font-semibold ${currentWorld.colors.cardSub}`}>
+                {currentWorld.subtitle}
+              </p>
+            </div>
+
+            <button onClick={handleNextWorld} className={`p-2 active:scale-90 transition-transform bg-black/5 rounded-full hover:bg-black/10 ${currentWorld.colors.cardText}`}>
+              <ChevronRight size={28} />
+            </button>
+
             {/* Decoration */}
-            <div className="absolute -top-6 -left-4 w-16 h-16"><FlowerSVG /></div>
+            <div className="absolute -top-6 -left-4 w-16 h-16 pointer-events-none">
+              <currentWorld.GoalSvg />
+            </div>
           </div>
 
           {/* Level Grid */}
-          <div className="bg-[#6BB936] w-full max-w-md rounded-2xl p-6 shadow-inner grid grid-cols-3 gap-6 justify-items-center">
-            {[1, 2, 3, 4, 5, 6].map((lvl) => (
+          <div className={`${currentWorld.colors.boardInner} w-full rounded-2xl p-6 shadow-inner grid grid-cols-3 gap-6 justify-items-center`}>
+            {currentWorld.levels.map((lvl, idx) => (
               <button
-                key={lvl}
-                onClick={() => loadLevel(lvl - 1)}
+                key={idx}
+                onClick={() => loadLevel(idx)}
                 className="relative flex flex-col items-center w-20 active:scale-95 transition-transform"
               >
-                <div className="w-20 h-20 bg-white rounded-full p-2 shadow-md relative border-2 border-[#5CA42A]">
-                  <FlowerSVG />
-                  <div className="absolute -top-1 -right-1 bg-[#4B5E9F] text-white w-8 h-8 rounded-full flex items-center justify-center font-bold border-2 border-white shadow-sm">
-                    {lvl}
+                <div className={`w-20 h-20 bg-white rounded-full p-3 shadow-md relative border-4 ${currentWorld.colors.cardBorder}`}>
+                  <currentWorld.GoalSvg />
+                  <div className={`absolute -top-1 -right-1 ${currentWorld.colors.header} text-white w-8 h-8 rounded-full flex items-center justify-center font-bold border-2 border-white shadow-sm`}>
+                    {idx + 1}
                   </div>
                 </div>
-                <span className="text-white font-bold mt-2 text-sm drop-shadow-md">Level {lvl}</span>
+                <span className="text-white font-bold mt-2 text-sm drop-shadow-md">Level {idx + 1}</span>
               </button>
             ))}
           </div>
@@ -356,14 +574,14 @@ export default function App() {
   }
 
   return (
-    <div className="fixed inset-0 bg-[#6BB936] flex flex-col font-sans select-none touch-none overflow-hidden">
+    <div className={`fixed inset-0 ${currentWorld.colors.bg} flex flex-col font-sans select-none touch-none overflow-hidden`}>
       {/* Top Bar */}
-      <div className="h-14 bg-[#48872F] flex items-center justify-between px-4 shadow-md z-20">
-        <button onClick={() => setScreen('levels')} className="text-[#A5D289] hover:text-white transition-colors">
+      <div className={`h-14 ${currentWorld.colors.header} flex items-center justify-between px-4 shadow-md z-20`}>
+        <button onClick={() => setScreen('levels')} className="text-white/70 hover:text-white transition-colors">
           <Home size={32} />
         </button>
         <h1 className="text-white text-xl font-bold">Bee-Bot<sup className="text-xs">®</sup></h1>
-        <button onClick={resetGame} className="text-[#A5D289] hover:text-white transition-colors">
+        <button onClick={resetGame} className="text-white/70 hover:text-white transition-colors">
           <Settings size={32} />
         </button>
       </div>
@@ -398,9 +616,9 @@ export default function App() {
         </div>
 
         {/* The Fence & Board */}
-        <div className="relative border-[16px] border-[#A2703D] rounded-xl shadow-2xl overflow-hidden bg-[#7B5836] mt-12">
+        <div className={`relative border-[16px] ${currentWorld.colors.boardOuter} rounded-xl shadow-2xl overflow-hidden ${currentWorld.colors.boardInner} mt-12`}>
           {/* Wooden fence posts decoration (CSS trick) */}
-          <div className="absolute inset-[-16px] border-[16px] border-dashed border-[#8A5A2B] rounded-xl pointer-events-none opacity-50"></div>
+          <div className={`absolute inset-[-16px] border-[16px] border-dashed ${currentWorld.colors.boardOuterDark} rounded-xl pointer-events-none opacity-50`}></div>
 
           <div
             className="grid relative"
@@ -416,29 +634,56 @@ export default function App() {
                 const isPath = cell === 1;
                 const isGoal = x === currentLevel.goal.x && y === currentLevel.goal.y;
 
-                // Decorative cabbages and plants derived from level data
-                const isDirtWithVeg = !isPath && currentLevel.veggies?.some(v => v.x === x && v.y === y);
-                const isDirtWithPlant = !isPath && currentLevel.plants?.some(p => p.x === x && p.y === y);
-
                 return (
-                  <div key={`${x}-${y}`} className={`relative flex items-center justify-center border-[0.5px] border-black/10 ${isPath ? 'bg-[#E6E6E6]' : 'bg-[#7B5836]'}`}>
+                  <div key={`${x}-${y}`} className={`relative flex items-center justify-center border-[0.5px] border-black/10 ${isPath ? currentWorld.colors.path : currentWorld.colors.wall}`}>
                     {/* Grid styling for path */}
-                    {isPath && <div className="absolute inset-0 border-2 border-white/40 m-1 rounded-sm shadow-inner"></div>}
+                    {isPath && <div className="absolute inset-0 border-2 border-black/10 m-1 rounded-sm shadow-inner"></div>}
 
-                    {/* Veggies */}
-                    {isDirtWithVeg && <span className="text-3xl drop-shadow-md">🥬</span>}
-                    {isDirtWithPlant && <span className="text-4xl drop-shadow-md">🌿</span>}
+                    {/* Decorations */}
+                    {currentLevel.decorations?.map((dec, idx) => {
+                      if (dec.x === x && dec.y === y) {
+                        return <span key={idx} className="text-3xl drop-shadow-md z-0 absolute">{dec.emoji}</span>
+                      }
+                      return null;
+                    })}
 
-                    {/* Goal (Flower) */}
+                    {/* Goal */}
                     {isGoal && (
                       <div className="absolute w-[80%] h-[80%] z-0">
-                        <FlowerSVG />
+                        <currentWorld.GoalSvg />
                       </div>
                     )}
                   </div>
                 )
               })
             )}
+
+            {/* Smoothly Animated Mummies Overlay */}
+            {currentLevel.mummies?.map((m, idx) => {
+              const L = m.max - m.min;
+              const cycle = L > 0 ? L * 2 : 1;
+              const pos = tick % cycle;
+              const offset = pos > L ? cycle - pos : pos;
+              const mx = m.axis === 'x' ? m.min + offset : m.x || 0;
+              const my = m.axis === 'y' ? m.min + offset : m.y || 0;
+
+              return (
+                <div
+                  key={`mummy-${idx}`}
+                  className="absolute z-15 transition-all flex items-center justify-center pointer-events-none"
+                  style={{
+                    transitionDuration: `${MOVE_DELAY}ms`,
+                    transitionTimingFunction: 'linear',
+                    width: `${100 / currentLevel.gridSize}%`,
+                    height: `${100 / currentLevel.gridSize}%`,
+                    left: `${mx * (100 / currentLevel.gridSize)}%`,
+                    top: `${my * (100 / currentLevel.gridSize)}%`,
+                  }}
+                >
+                  <span className="text-4xl drop-shadow-md z-10">🧟‍♂️</span>
+                </div>
+              );
+            })}
 
             {/* Smoothly Animated Bee-Bot Overlay */}
             <div
@@ -519,16 +764,16 @@ export default function App() {
       {/* Win Screen Modal */}
       {showWin && (
         <div className="absolute inset-0 z-50 flex items-center justify-center p-6 bg-black/40 backdrop-blur-sm animate-in fade-in duration-300">
-          <div className="bg-[#539A3A] w-full max-w-sm rounded-[32px] border-[6px] border-[#3F7C28] shadow-2xl overflow-hidden flex flex-col items-center">
+          <div className={`${currentWorld.colors.winBg} w-full max-w-sm rounded-[32px] border-[6px] ${currentWorld.colors.winBorder} shadow-2xl overflow-hidden flex flex-col items-center`}>
             {/* Header */}
-            <div className="bg-[#71BA49] w-full py-4 text-center border-b-[6px] border-[#3F7C28]">
+            <div className={`${currentWorld.colors.winHeader} w-full py-4 text-center border-b-[6px] ${currentWorld.colors.winBorder}`}>
               <h2 className="text-white text-2xl font-bold uppercase tracking-wide">You did it</h2>
             </div>
 
             {/* Body */}
             <div className="p-8 flex flex-col items-center relative w-full overflow-hidden">
               {/* Sunburst background effect */}
-              <div className="absolute inset-0 bg-[repeating-conic-gradient(#5CA42A_0_15deg,#539A3A_15deg_30deg)] opacity-50 z-0"></div>
+              <div className="absolute inset-0 bg-[repeating-conic-gradient(rgba(255,255,255,0.1)_0_15deg,transparent_15deg_30deg)] opacity-50 z-0"></div>
 
               <div className="relative z-10 flex flex-col items-center">
                 <h3 className="text-white text-4xl font-black mb-4 drop-shadow-lg filter drop-shadow-[0_4px_0_rgba(0,0,0,0.3)]">Great Job!</h3>
@@ -537,7 +782,7 @@ export default function App() {
                   <span className="absolute -left-4 top-10 text-4xl text-[#FFC107] drop-shadow-md">⭐</span>
                   <span className="absolute -right-4 top-10 text-4xl text-[#FFC107] drop-shadow-md">⭐</span>
                   <span className="absolute left-1/2 -translate-x-1/2 -top-4 text-5xl text-[#FFC107] drop-shadow-md">⭐</span>
-                  <FlowerSVG />
+                  <currentWorld.GoalSvg />
                 </div>
 
                 <button
@@ -547,6 +792,27 @@ export default function App() {
                   OK
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Crash Screen Modal */}
+      {showCrash && (
+        <div className="absolute inset-0 z-50 flex items-center justify-center p-6 bg-black/60 backdrop-blur-sm animate-in zoom-in duration-300">
+          <div className="bg-[#E74C3C] w-full max-w-sm rounded-[32px] border-[6px] border-[#C0392B] shadow-2xl overflow-hidden flex flex-col items-center">
+            <div className="bg-[#E67E22] w-full py-4 text-center border-b-[6px] border-[#C0392B]">
+              <h2 className="text-white text-2xl font-bold uppercase tracking-wide">Oh no!</h2>
+            </div>
+            <div className="p-8 flex flex-col items-center relative w-full overflow-hidden">
+              <h3 className="text-white text-3xl font-black mb-4 drop-shadow-lg text-center leading-tight">Watch out for<br />the Mummy!</h3>
+              <div className="text-7xl mb-6 drop-shadow-xl animate-bounce">🧟‍♂️</div>
+              <button
+                onClick={resetGame}
+                className="bg-[#F1C40F] text-[#D35400] text-2xl font-black py-3 px-10 rounded-xl shadow-[0_6px_0_#F39C12] active:shadow-[0_0px_0_#F39C12] active:translate-y-[6px] transition-all border-2 border-[#FFF]"
+              >
+                Try Again
+              </button>
             </div>
           </div>
         </div>
